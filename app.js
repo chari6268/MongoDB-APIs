@@ -12,4 +12,7 @@ app.use(express.json())
 const allRoutes = require('./routes/allRoutes')
 app.use('/api', allRoutes)
 
+const uploadRouter = require('./routes/upload')
+app.use('/api/upload', uploadRouter)
+
 app.listen(3000,() => console.log("Server started"))

@@ -9,7 +9,11 @@ const uploadRouter = express.Router();
 // Define the storage for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    const uploadDir = path.join(__dirname, '../uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Append the original file extension
@@ -27,17 +31,8 @@ const fileSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Create a model for the uploaded files
 const File = mongoose.model('File', fileSchema);
-// Connect to MongoDB
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
 
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
-// Route to handle file upload
 uploadRouter.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
