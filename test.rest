@@ -1,0 +1,29 @@
+GET http://localhost:3000/api
+
+###
+
+POST http://localhost:3000/api
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "testing@gmail.com",
+  "age": 30
+}
+
+###
+
+GET http://localhost:3000/api/684a844516f7e98db2fed025
+
+###
+PUT http://localhost:3000/api/684a844516f7e98db2fed025
+Content-Type: application/json
+
+{
+  "name": "Srinivasa Chari",
+  "email": "testing@gmail.com",
+  "age": 20
+}
+
+###
+DELETE http://localhost:3000/api/684a619dee9e7b3d81af941f
